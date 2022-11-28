@@ -1,0 +1,11 @@
+.details-container {
+    background-color: #fff;
+    height: calc(100vh - 52px);
+    overflow: scroll;
+}
+
+.bottom-buttons {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
