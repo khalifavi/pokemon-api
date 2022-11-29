@@ -14,6 +14,7 @@ function PokemonDetails() {
   const { pokemons } = store.getState() as typeof pokemonInitialState;
 
   const [pokemon, setPokemon] = useState<any>();
+  const [nickname, setNickname] = useState<string | undefined>();
 
   const {
     isLoading: detailsLoading,
@@ -37,6 +38,42 @@ function PokemonDetails() {
       detailsRefetch();
     }
   }, []);
+
+  const catchButtonClick = () => {
+    if (!pokemon) return;
+    showNickDialog();
+  };
+
+  const onChangedNickname = (event: React.ChangeEvent<HTMLInputElement> | undefined) => {
+    setNickname(event?.target.value);
+  };
+
+  const showNickDialog = () => {
+    const dialog = document.getElementById("nickname-modal");
+    dialog?.classList.add("is-active");
+  }
+
+  const closeNickDialog = () => {
+    const dialog = document.getElementById("nickname-modal");
+    dialog?.classList.remove("is-active");
+  }
+
+  const catchPokemon = (nickname?: string) => {
+    const dialog = document.getElementById("nickname-modal");
+    dialog?.classList.remove("is-active");
+
+    const uuid = crypto.randomUUID();
+
+    const thePokemon = {
+      uuid,
+      name: pokemon.name,
+      image: pokemon.sprites.front_default,
+      nick: nickname,
+    };
+    const myPokemons = JSON.parse(localStorage.getItem("my-pokemons") || "{}");
+    myPokemons[uuid] = thePokemon;
+    localStorage.setItem("my-pokemons", JSON.stringify(myPokemons));
+  }
 
   return (
     <>
@@ -82,7 +119,37 @@ function PokemonDetails() {
           </div>
         </div>
         <div className="bottom-buttons field is-grouped">
-          <button className="button is-danger is-fullwidth">Catch</button>
+          <button
+            className="button is-danger is-fullwidth"
+            onClick={catchButtonClick}
+          >
+            Catch
+          </button>
+        </div>
+      </div>
+      <div id="nickname-modal" className="modal">
+        <div className="modal-background"></div>
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">Nickname</p>
+            <button className="delete" aria-label="close" onClick={closeNickDialog}></button>
+          </header>
+          <section className="modal-card-body">
+            Give nickname to the{" "}
+            <span className="pokemon-name">{pokemon?.name || "Pokemon"}</span>?
+            <input
+              className="input is-info"
+              type="text"
+              placeholder="Nickname"
+              name="nickname"
+              value={nickname}
+              onChange={onChangedNickname}
+            />
+          </section>
+          <footer className="modal-card-foot">
+            <button className="button is-success" onClick={()=>{catchPokemon(nickname)}}>Save Nickname</button>
+            <button className="button is-success" onClick={()=>{catchPokemon()}}>Just Catch</button>
+          </footer>
         </div>
       </div>
     </>

@@ -55,8 +55,11 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-.card .pokemon-name {
+.column .card {
+  max-width: 150px;
+  min-width: 150px;
+}
+.card .pokemon-name, .pokemon-name {
   text-transform: capitalize;
 }
 

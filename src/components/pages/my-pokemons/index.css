@@ -1,0 +1,22 @@
+.list-container {
+    background-color: #fff;
+    height: calc(100vh - 52px);
+    overflow: scroll;
+}
+
+.list-container .columns {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list-container .columns .card {
+    padding: 0;
+}
+
+.list-container .columns .card .pokemon-name {
+    text-transform: capitalize;
+}
+
+.list-container .columns .card .media .media-center {
+    margin: 0 auto;
+}

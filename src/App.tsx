@@ -14,17 +14,17 @@ import Header from "./components/pages/header";
 
 function App() {
   return (
-    <div id="wrapper" className="container has-text-centered-mobile">
-      <Header />
-      <BrowserRouter>
+    <BrowserRouter>
+      <div id="wrapper" className="container has-text-centered-mobile">
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pokemon/:name" element={<PokemonDetails />} />
           <Route path="/my-pokemons" element={<MyPokemons />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
